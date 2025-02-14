@@ -1,4 +1,4 @@
-# User Registration API
+# My Uber Project's APIs
 
 ## Endpoint: `/api/user/register`
 
