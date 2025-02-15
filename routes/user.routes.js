@@ -1,5 +1,5 @@
 import express from 'express';
-import registerUser from '../controllers/user.controller.js';
+import registerUser,{loginUser} from '../controllers/user.controller.js';
 import {body} from 'express-validator'
 // import { createUser, getUser, getUsers, updateUser, deleteUser } from '../controllers/user.controller.js';
 const router = express.Router()
@@ -10,6 +10,12 @@ router.post('/register',[
     body('email').isEmail().withMessage("Please provide a valid email"),
     body('password').isLength({min:8}).withMessage("Password should be atleast 8 characters long")
 ],registerUser)
+
+
+router.post('/login',[
+    body('email').isEmail().withMessage("Please provide a valid email"),
+    body('password').isLength({min:8}).withMessage("Password should be atleast 8 characters long")
+],loginUser)
 
 
 

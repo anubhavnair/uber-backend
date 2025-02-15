@@ -32,14 +32,6 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// Middleware to exclude password from query results
-userSchema.pre('find', function() {
-    this.select('-password');
-});
-
-userSchema.pre('findOne', function() {
-    this.select('-password');
-});
 
 userSchema.methods.generateAuthToken = function(){
     return jwt.sign({id:this._id},process.env.JWT_SECRET,{expiresIn:'1d'})
