@@ -153,3 +153,50 @@ Example:
     "error": "Error message"
   }
   ```
+  ### 3. Get User Profile
+
+#### Endpoint: `/api/user/profile`
+
+#### Description
+This endpoint is used to retrieve the profile of the authenticated user. It requires a valid JWT token to be provided in the request headers.
+
+#### Method
+`GET`
+
+#### Request Headers
+- `Authorization`: `Bearer <jwt_token>`
+
+#### Responses
+
+##### Success
+- **Status Code**: `200 OK`
+- **Body**:
+  ```json
+  {
+    "_id": "user_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    // other user fields except password
+  }
+  ```
+
+##### Authentication Error
+- **Status Code**: `401 Unauthorized`
+- **Body**:
+  ```json
+  {
+    "error": "Authentication token is missing or invalid"
+  }
+  ```
+
+##### Other Errors
+- **Status Code**: `400 Bad Request`
+- **Body**:
+  ```json
+  {
+    "error": "Error message"
+  }
+  ```
