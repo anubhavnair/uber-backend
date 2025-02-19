@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import connectToDb from './db/db.js';
 import cors from 'cors';
 import userRoutes from './routes/user.routes.js';
+import capRoutes from './routes/captain.routes.js';
 
 const app  = express();
 
@@ -20,6 +21,7 @@ await connectToDb();
 
 // route middlewares 
 app.use('/api/users',userRoutes);
+app.use('/api/captain',capRoutes);
 
 // sample server check 
 app.get('/',(req,res)=>{
