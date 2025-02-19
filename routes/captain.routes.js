@@ -1,6 +1,7 @@
 import express from 'express';
-import registerCaptain, { loginCaptain } from '../controllers/captain.controller.js';
+import registerCaptain, { getCaptainProfile, loginCaptain, logoutCaptain } from '../controllers/captain.controller.js';
 import { body } from 'express-validator';
+import { authCaptain } from '../middlewares/auth.middleware.js';
 const router = express.Router();
 
 router.post('/register', [
@@ -18,6 +19,9 @@ router.post('/login',[
     body('password').isLength({min:8}).withMessage("Password should be atleast 8 characters long")
 ],loginCaptain)
 
+router.get('/profile',authCaptain,getCaptainProfile)
+
+router.get('/logout',authCaptain,logoutCaptain)
 export default router;
 
 

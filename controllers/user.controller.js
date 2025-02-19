@@ -16,7 +16,7 @@ const registerUser = async (req, res) => {
         req.body.password = hashedPassword;
         const user = await createUser(req.body);
         const token = await user.generateAuthToken();
-        res.status(201).json({ user,token })
+        res.status(201).json({ user, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -46,32 +46,35 @@ const loginUser = async (req, res) => {
             return res.status(401).json({ error: "Invalid email or password" })
         }
         const token = await user.generateAuthToken();
-        res.status(200).json({ user,token })
+        res.cookie('token', token)
+        res.status(200).json({ user, token })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
- }
+}
 
 
 //  get profile 
-const getUserProfile = async (req,res) => {
+const getUserProfile = async (req, res) => {
     res.status(200).json(req.user)
 }
 
 // logout 
-const logoutUser = async (req,res) => {
+const logoutUser = async (req, res) => {
     try {
         res.clearCookie('token');
         const token = req.headers.authorization?.split(' ')[1] || req.cookie.token
-        await blacklistingTokenModel.create({token})
-        res.status(200).json({message:"Logged out successfully"})
+
+        await blacklistingTokenModel.create({ token })
+        res.clearCookie('token')
+        res.status(200).json({ message: "Logged out successfully" })
     } catch (error) {
-        res.status(400).json({error:error.message})
-        
+        res.status(400).json({ error: error.message })
+
     }
-   
+
 
 
 }
 export default registerUser;
-export{loginUser,getUserProfile,logoutUser};
+export { loginUser, getUserProfile, logoutUser };
